@@ -298,39 +298,3 @@ Gallary_End=====
 .moon {
   font-size: 20px;
 }
-
-
-/* Loader */
-.ball-scale-ripple-multiple {
-  position: relative;
-  display: block;
-}
-
-.ball-scale-ripple-multiple > div {
-  position: absolute;
-  border: 1px solid #000;
-  border-radius: 50%;
-  background: #3498db;
-  width: 80px;
-  height: 80px;
-  animation: ball-scale-ripple-multiple 1.25s infinite cubic-bezier(0.21, 0.53, 0.56, 0.8);
-}
-
-.ball-scale-ripple-multiple > div:nth-child(2) {
-  animation-delay: 0.25s;
-}
-
-.ball-scale-ripple-multiple > div:nth-child(3) {
-  animation-delay: 0.5s;
-}
-
-@keyframes ball-scale-ripple-multiple {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-/* Loader_End====*/

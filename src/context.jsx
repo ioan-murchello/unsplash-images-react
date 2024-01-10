@@ -22,7 +22,9 @@ export const searchHistory = []
 export const AppProvider = ({ children }) => {
 
   const [isDarkTheme, setIsDarkTheme] = useState(getInitialDarkMode());
-  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('islands');
+  const [isOpen, setIsOpen] = useState(false)
+  const [modalItem, setItemModal] = useState({})
   
 
   let theme = 'light';
@@ -41,10 +43,9 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('darkTheme', newDarkTheme);
   };
 
- 
+ console.log(modalItem);
 
-  useEffect(() => {
-    setSearchTerm('islands')
+  useEffect(() => { 
     onSetTheme(theme);
   }, [isDarkTheme]);
 
@@ -55,6 +56,10 @@ export const AppProvider = ({ children }) => {
         toggleDarkTheme,
         searchTerm,
         setSearchTerm,
+        modalItem,
+        setItemModal,
+        setIsOpen,
+        isOpen,
       }}
     >
       {children}

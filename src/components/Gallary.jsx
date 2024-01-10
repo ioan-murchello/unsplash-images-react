@@ -1,21 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useGlobalContext } from '../context';
+import { motion } from 'framer-motion';
+ 
 
 const url = `https://api.unsplash.com/search/photos?client_id=${
   import.meta.env.VITE_API_KEY
 }`;
 
 const Gallary = () => {
-  const { searchTerm } = useGlobalContext(); 
+  const { searchTerm,setItemModal,setIsOpen } = useGlobalContext();
 
   const {
     data: { results = [] } = {},
     isLoading,
     isError,
-    error, 
+    error,
   } = useQuery({
-    queryKey: ['images', searchTerm], 
+    queryKey: ['images', searchTerm],
     queryFn: async () => {
       const result = await axios.get(`${url}&query=${searchTerm}`);
       return result.data;
@@ -38,25 +40,45 @@ const Gallary = () => {
     );
   }
 
-   
- if(results.length < 1){
-    return <section><h4>No results found...</h4></section>
-     
- }
+  if (results.length < 1) {
+    return (
+      <section>
+        <h4>No results found...</h4>
+      </section>
+    );
+  }
 
-   
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const itemAnimate = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
 
   return (
-    <section className='gallary'>
-      {results.map((item) => {
-        const url = item?.urls?.regular;
-        return (
-          <div key={item.id}>
-            <img src={url} alt={item.alt_de} />
-          </div>
-        );
-      })}
-    </section>
+    <>
+      <motion.section
+        variants={container}
+        initial='hidden'
+        animate='show'
+        className='gallary'
+      >
+        {results.map((item) => {
+          const url = item?.urls?.regular;
+          return (
+            <motion.div variants={itemAnimate} key={item.id} onClick={() => {
+                setItemModal(item);
+                setIsOpen(true)
+            }}>
+              <img src={url} alt={item.alt_de} />
+            </motion.div>
+          );
+        })}
+      </motion.section>
+    </>
   );
 };
 

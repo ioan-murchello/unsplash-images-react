@@ -18,9 +18,10 @@ const getInitialDarkMode = () => {
 };
 
 export const AppProvider = ({ children }) => {
+
   const [isDarkTheme, setIsDarkTheme] = useState(getInitialDarkMode());
   const [searchTerm, setSearchTerm] = useState('islands');
-
+  
   let theme = 'light';
 
   if (isDarkTheme) {
@@ -28,6 +29,7 @@ export const AppProvider = ({ children }) => {
   }
 
   const toggleDarkTheme = () => {
+
     onSetTheme(theme);
 
     const newDarkTheme = !isDarkTheme;
@@ -37,13 +39,17 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('darkTheme', newDarkTheme);
   };
 
-  useEffect(() => {
+  useEffect(() => { 
     onSetTheme(theme);
   }, [isDarkTheme]);
 
   return (
     <AppContext.Provider
-      value={{ isDarkTheme, toggleDarkTheme, searchTerm, setSearchTerm }}
+      value={{
+        isDarkTheme,
+        toggleDarkTheme,
+        searchTerm,
+      }}
     >
       {children}
     </AppContext.Provider>

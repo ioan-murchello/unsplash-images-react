@@ -1,54 +1,65 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useGlobalContext } from '../context';
+import Loader from './Loader';
+import { useEffect, useState } from 'react';
 
-import { useQuery } from "@tanstack/react-query";
-import axios from 'axios'
-import { useGlobalContext } from "../context";
-
-const url =
-  `https://api.unsplash.com/search/photos?client_id=${import.meta.env.VITE_API_KEY}`;
+const url = `https://api.unsplash.com/search/photos?client_id=${
+  import.meta.env.VITE_API_KEY
+}`;
 
 const Gallary = () => {
+  const { searchTerm } = useGlobalContext(); 
 
-    const {searchTerm} = useGlobalContext()
+  const {
+    data: { results = [] } = {},
+    isLoading,
+    isError,
+    error, 
+  } = useQuery({
+    queryKey: ['images', searchTerm], 
+    queryFn: async () => {
+      const result = await axios.get(`${url}&query=${searchTerm}`);
+      return result.data;
+    },
+  });
 
-    const res = useQuery({
-        queryKey:['images',searchTerm],
-        staleTime: 4000,
-        queryFn: async () => {
+  if (isLoading) {
+    return (
+      <section>
+        <h4>loading...</h4>
+      </section>
+    );
+  }
 
-            const result = await axios.get(`${url}&query=${searchTerm}`);
+  if (isError) {
+    return (
+      <section>
+        <h4>{error.message}</h4>
+      </section>
+    );
+  }
 
-            return result.data
-        },
-         
-    })
+   
+ if(results.length < 1){
+    return <section><h4>No results found...</h4></section>
+     
+ }
 
-    if(res.isLoading){
-        return <section>
-            <h4>Loading...</h4>
-        </section>
-    }
-
-    if(res.isError){
-        return <section>
-            <h4>There was an error...</h4>
-        </section>
-    }
-
-    const results = res.data.results;
-    if(results.length < 1){
-        return <section>
-            <h4>No results found...</h4>
-        </section>
-    }
+   
 
   return (
-    <section className="gallary">
-        {results.map(item => {
-            const url = item?.urls?.regular
-            return <img key={item.id} src={url} alt={item.alt_de}/>
-        })}
+    <section className='gallary'>
+      {results.map((item) => {
+        const url = item?.urls?.regular;
+        return (
+          <div key={item.id}>
+            <img src={url} alt={item.alt_de} />
+          </div>
+        );
+      })}
     </section>
-  )
-}
+  );
+};
 
-export default Gallary
+export default Gallary;

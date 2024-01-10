@@ -1,21 +1,17 @@
 import './App.css';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
-import Gallary from './components/Gallary';
+import Gallary from './components/Gallary'; 
 
 function App() {
   return (
-    <main>
-      <Header />
-      <div className='container'>
-        <div className='main-wrapper'>
-          <aside className='aside'>
-            <Sidebar />
-          </aside>
-          <Gallary />
-        </div>
+    <>
+      <Header /> 
+      <div className='main'>
+        <Sidebar />
+        <Gallary />
       </div>
-    </main>
+    </>
   );
 }
 

@@ -8,9 +8,9 @@ const Header = () => {
 
   return (
     <header>
-      <div className='header-logo'>Logo</div>
+      <div className='header-logo'>U-Images</div>
       <button className='dark-toggle' onClick={toggleDarkTheme}>
-        {isDarkTheme ? <BsSun /> : <BsMoonFill />}
+        {isDarkTheme ? <BsSun className='sun' /> : <BsMoonFill className='moon' />}
       </button>
     </header>
   );

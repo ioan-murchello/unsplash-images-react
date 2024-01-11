@@ -22,7 +22,7 @@ export const onSetTheme = (theme) => {
   });
 };
 
-
+// Debounce funciton
 export const debounce = (cb) => {
 
     let timerId; 
@@ -38,4 +38,7 @@ export const debounce = (cb) => {
         }, 800)
     }
 }
+
+//For FramerMotin css library
+
 

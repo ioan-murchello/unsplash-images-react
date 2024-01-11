@@ -1,28 +1,39 @@
 import { useGlobalContext } from "../context";
-
+import { AiOutlineCloseSquare } from 'react-icons/ai';
+import {motion} from 'framer-motion'
 
 const Modal = () => {
     const { setIsOpen, modalItem } = useGlobalContext();
     const {description, urls, user, created_at} = modalItem
-    let desc = description ? `${description.slice(0, 200)}...` : 'This picture hasn"t description'
+
+    let desc = description ? `${description.slice(0, 200)}...` : "Beautiful picture"
+    let timeOfCreated = created_at ? created_at.slice(0, 10) : new Date().toLocaleDateString()
 
     const onCloseModal = () => {
         setIsOpen(false);
     }
+    
   return (
     <>
       <div className='modal-overlay' onClick={onCloseModal}>
-        <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-            <div>
-                <img style={{width: '200px', height: '200px'}} src={urls.regular} alt="image" />
-                <p>{desc}</p>
-                <p>Author : {user.name}</p>
-                <p>Created: {created_at.slice(0, 10)}</p>
-            </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          exit={{ opacity: 0 }}
+          className='modal-content'
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className='img-wrapper'>
+            <img src={urls.regular} alt='image' />
+          </div>
+          <p>{desc}</p>
+          <p>Author : {user.name}</p>
+          <p>Created: {timeOfCreated}</p>
           <button className='close-button' onClick={onCloseModal}>
-            Close
+            <AiOutlineCloseSquare />
           </button>
-        </div>
+        </motion.div>
       </div>
     </>
   );

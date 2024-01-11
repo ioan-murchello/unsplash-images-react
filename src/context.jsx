@@ -16,8 +16,7 @@ const getInitialDarkMode = () => {
 
   return storedDarkMode === 'true';
 };
-
-export const searchHistory = []
+ 
 
 export const AppProvider = ({ children }) => {
 
@@ -26,7 +25,9 @@ export const AppProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [modalItem, setItemModal] = useState({})
   
-
+  const [searchHistory, setSearchHistory] = useState(JSON.parse(localStorage.getItem('history'))|| [])
+  const [isFind, setIsFind] = useState(false)
+  
   let theme = 'light';
 
   if (isDarkTheme) {
@@ -43,8 +44,6 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('darkTheme', newDarkTheme);
   };
 
- console.log(modalItem);
-
   useEffect(() => { 
     onSetTheme(theme);
   }, [isDarkTheme]);
@@ -60,6 +59,10 @@ export const AppProvider = ({ children }) => {
         setItemModal,
         setIsOpen,
         isOpen,
+        searchHistory,
+        setSearchHistory,
+        isFind,
+        setIsFind,
       }}
     >
       {children}

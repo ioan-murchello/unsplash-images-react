@@ -6,7 +6,7 @@ import Modal from './components/Modal';
 import { useGlobalContext } from './context';
 
 function App() {
-  const{isOpen} = useGlobalContext()
+  const {isOpen} = useGlobalContext()
   return (
     <>
       {isOpen && <Modal />}

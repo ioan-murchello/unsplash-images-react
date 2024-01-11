@@ -33,7 +33,7 @@ export const AppProvider = ({ children }) => {
   if (isDarkTheme) {
     theme = 'dark';
   }
-
+ 
   const toggleDarkTheme = () => {
     onSetTheme(theme);
 

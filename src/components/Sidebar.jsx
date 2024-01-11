@@ -51,7 +51,8 @@ const Sidebar = () => {
     setIsFind(false);
   }, [search, isFind, setSearchTerm]);
 
-  let historyLength = searchHistory.length > 5 && searchHistory.slice(0, 5);
+  let historyLength = searchHistory.length > 5 ? searchHistory.slice(0, 5) : searchHistory
+ 
 
   const onToggleHistory = (id) => {
     const arr = [...historyLength];
